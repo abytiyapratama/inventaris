@@ -1,7 +1,7 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-COPY . /usr/src/app
+COPY backend /usr/src/app
 WORKDIR /usr/src/app
-RUN mvn clean package -Dquarkus.package.type=fast-jar -DskipTests
+RUN ./mvnw clean package -Dquarkus.package.type=fast-jar -DskipTests
 
 FROM eclipse-temurin:21-jdk
 WORKDIR /deployments
