@@ -2,7 +2,7 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /usr/src/app
 COPY . .
-RUN ./mvnw clean package -Dquarkus.package.type=fast-jar -DskipTests
+RUN mvn clean package -Dquarkus.package.type=fast-jar -DskipTests
 
 # Tahap runtime
 FROM eclipse-temurin:21-jdk
