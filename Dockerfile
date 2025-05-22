@@ -2,21 +2,21 @@
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# 1. Copy konfigurasi Maven terlebih dahulu agar dependency bisa di-cache
+# 1. Copy file penting untuk resolve dependencies
 COPY pom.xml ./
 COPY mvnw ./
 COPY .mvn/ .mvn/
 
-# 2. Pre-cache dependencies (agar cepat build dan error tidak terjadi)
+# 2. Pre-cache dependencies
 RUN ./mvnw dependency:go-offline
 
-# 3. Setelah dependencies ter-cache, copy semua source project
+# 3. Setelah dependencies ter-cache, copy seluruh source
 COPY src ./src
 
 # 4. Jalankan build Quarkus dengan format uber-jar
 RUN ./mvnw clean package -Dquarkus.package.type=uber-jar -DskipTests
 
-# Step 2: Jalankan jar dengan JDK runtime yang lebih ringan
+# Step 2: Jalankan jar dengan JDK
 FROM eclipse-temurin:17-jdk
 WORKDIR /work/
 COPY --from=build /app/target/*-runner.jar app.jar
