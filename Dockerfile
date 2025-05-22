@@ -1,8 +1,14 @@
-FROM quay.io/quarkus/quarkus-micro-image:2.0
+# Gunakan base image Java 17
+FROM eclipse-temurin:17-jdk
 
+# Buat direktori kerja
 WORKDIR /work/
-COPY target/*-runner.jar app.jar
 
-EXPOSE 8080
+# Copy file hasil build dari Maven
+COPY target/crud-gudang-1.0.0-SNAPSHOT.jar app.jar
 
+# Expose port sesuai konfigurasi Quarkus (default 8080 atau 9002)
+EXPOSE 9002
+
+# Jalankan aplikasi
 CMD ["java", "-jar", "app.jar"]
