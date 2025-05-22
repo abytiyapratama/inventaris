@@ -17,7 +17,6 @@
         <compiler-plugin.version>3.14.0</compiler-plugin.version>
         <surefire-plugin.version>3.5.2</surefire-plugin.version>
         <maven.compiler.release>21</maven.compiler.release>
-        <!-- <quarkus.package.type>uber-jar</quarkus.package.type> -->
     </properties>
 
     <dependencyManagement>
@@ -38,7 +37,6 @@
             <artifactId>poi-ooxml</artifactId>
             <version>5.2.5</version>
         </dependency>
-
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-micrometer</artifactId>
@@ -88,12 +86,17 @@
     </dependencies>
 
     <build>
+        <finalName>crud-gudang</finalName>
+
         <plugins>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-maven-plugin</artifactId>
                 <version>${quarkus.platform.version}</version>
                 <extensions>true</extensions>
+                <configuration>
+                    <packageType>uber-jar</packageType>
+                </configuration>
             </plugin>
 
             <plugin>
