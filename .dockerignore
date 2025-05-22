@@ -1,12 +1,5 @@
-# Abaikan semua
 *
-
-# Tapi include file jar hasil build dan folder quarkus
+!target/*-runner
 !target/*-runner.jar
-!target/lib/**
-!target/quarkus-app/**
-
-# Jangan kirim file lokal
-.git
-.gitignore
-README.md
+!target/lib/*
+!target/quarkus-app/*
