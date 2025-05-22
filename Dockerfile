@@ -1,7 +1,10 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /build
 COPY . .
-RUN chmod +x ./mvnw && ./mvnw clean package -Dquarkus.package.type=fast-jar -DskipTests
+RUN apt-get update && apt-get install -y dos2unix \
+ && dos2unix mvnw \
+ && chmod +x mvnw \
+ && ./mvnw clean package -Dquarkus.package.type=fast-jar -DskipTests
 
 FROM eclipse-temurin:21-jdk
 WORKDIR /deployments
