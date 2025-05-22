@@ -1,24 +1,25 @@
-# Step 1: Build jar menggunakan Maven
+# Step 1: Build jar using Maven Wrapper
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# 1. Copy file penting untuk resolve dependencies
+# Copy Maven wrapper, configuration, and pom.xml
 COPY pom.xml ./
 COPY mvnw ./
 COPY .mvn/ .mvn/
 
-# 2. Pre-cache dependencies
-RUN ./mvnw dependency:go-offline
+# Pre-cache dependencies
+RUN chmod +x mvnw && ./mvnw dependency:go-offline
 
-# 3. Setelah dependencies ter-cache, copy seluruh source
-COPY src ./src
+# Copy source code
+COPY src/ ./src/
 
-# 4. Jalankan build Quarkus dengan format uber-jar
+# Build Quarkus as uber-jar
 RUN ./mvnw clean package -Dquarkus.package.type=uber-jar -DskipTests
 
-# Step 2: Jalankan jar dengan JDK
+# Step 2: Run app using JDK base
 FROM eclipse-temurin:17-jdk
 WORKDIR /work/
 COPY --from=build /app/target/*-runner.jar app.jar
+
 EXPOSE 9002
 CMD ["java", "-jar", "app.jar"]
