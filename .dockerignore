@@ -1,2 +1,10 @@
-/target/
-!/target/*-runner.jar
+target/
+!target/*-runner.jar
+!target/lib/**
+!target/quarkus-app/**
+
+# Tambahan ignore umum
+.git
+.gitignore
+.dockerignore
+README.md
