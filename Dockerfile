@@ -1,8 +1,10 @@
+# Tahap build
 FROM maven:3.9.6-eclipse-temurin-21 AS build
-COPY backend /usr/src/app
 WORKDIR /usr/src/app
+COPY . .
 RUN ./mvnw clean package -Dquarkus.package.type=fast-jar -DskipTests
 
+# Tahap runtime
 FROM eclipse-temurin:21-jdk
 WORKDIR /deployments
 COPY --from=build /usr/src/app/target/quarkus-app/lib/ /deployments/lib/
