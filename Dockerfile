@@ -1,8 +1,8 @@
 # Step 1: Build jar menggunakan Maven
-FROM maven:3.9.6-eclipse-temurin-17 as build
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
-RUN ./mvnw clean package -Dquarkus.package.type=uber-jar -DskipTests
+RUN mvn clean package -Dquarkus.package.type=uber-jar -DskipTests
 
 # Step 2: Jalankan jar dengan JDK
 FROM eclipse-temurin:17-jdk
